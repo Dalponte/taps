@@ -1,0 +1,18 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: taps-mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt/config:/mosquitto/config
+      - ./mqtt/data:/mosquitto/data
+      - ./mqtt/log:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - taps-network
+
+networks:
+  taps-network:
+    driver: bridge
