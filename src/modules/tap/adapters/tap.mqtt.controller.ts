@@ -1,9 +1,8 @@
-import { Controller, Inject, Logger } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { Controller, Logger } from '@nestjs/common';
+import { EventPattern, Payload } from '@nestjs/microservices';
 import { HandleTapStateUseCase } from '../application/use-cases/handle-tap-state.use-case';
 import { HandleTapInputUseCase } from '../application/use-cases/handle-tap-input.use-case';
 import { HandleTapDoneUseCase } from '../application/use-cases/handle-tap-done.use-case'; // Import the new use case
-import { raw } from 'express';
 
 @Controller()
 export class TapMqttController {

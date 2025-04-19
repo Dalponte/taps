@@ -1,6 +1,7 @@
 import { Module, Global } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TapMqttSerializer } from '../../tap/infrastructure/mqtt/tap-mqtt.serializer'; // Import the new serializer
 
 export const MQTT_CLIENT = 'MQTT_CLIENT';
 
@@ -15,6 +16,8 @@ export const MQTT_CLIENT = 'MQTT_CLIENT';
                     transport: Transport.MQTT,
                     options: {
                         url: configService.get<string>('MQTT_BROKER_URL'),
+                        // Use the custom Tap serializer
+                        serializer: new TapMqttSerializer(),
                     },
                 }),
                 inject: [ConfigService],

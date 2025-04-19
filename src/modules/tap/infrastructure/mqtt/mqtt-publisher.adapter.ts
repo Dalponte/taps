@@ -11,7 +11,7 @@ export class MqttPublisherAdapter implements IMqttPublisher {
         @Inject(MQTT_CLIENT) private readonly client: ClientProxy,
     ) { }
 
-    async publish(topic: string, payload: Buffer): Promise<void> {
+    async publish(topic: string, payload: any): Promise<void> {
         try {
             this.client.emit(topic, payload);
             this.logger.log(`Published message to topic: ${topic}, Size: ${payload.length}`);
