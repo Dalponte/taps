@@ -2,7 +2,8 @@ import { Controller, Logger } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { HandleTapStateUseCase } from '../application/use-cases/handle-tap-state.use-case';
 import { HandleTapInputUseCase } from '../application/use-cases/handle-tap-input.use-case';
-import { HandleTapDoneUseCase } from '../application/use-cases/handle-tap-done.use-case'; // Import the new use case
+import { HandleTapDoneUseCase } from '../application/use-cases/handle-tap-done.use-case';
+import { HandleTapFlowUseCase } from '../application/use-cases/handle-tap-flow.use-case';
 
 @Controller()
 export class TapMqttController {
@@ -12,6 +13,7 @@ export class TapMqttController {
         private readonly handleTapStateUseCase: HandleTapStateUseCase,
         private readonly handleTapInputUseCase: HandleTapInputUseCase,
         private readonly handleTapDoneUseCase: HandleTapDoneUseCase,
+        private readonly handleTapFlowUseCase: HandleTapFlowUseCase,
     ) { }
 
     @EventPattern('tap/state')
@@ -30,5 +32,11 @@ export class TapMqttController {
     handleTapPour(@Payload() rawPayload: any) {
         this.logger.log(`Received tap/done event. Payload (raw): ${JSON.stringify(rawPayload)}`);
         this.handleTapDoneUseCase.execute();
+    }
+
+    @EventPattern('tap/flow')
+    handleTapFlow(@Payload() rawPayload: any) {
+        this.logger.log(`Received tap flow data via MQTT Controller (binary data)`);
+        this.handleTapFlowUseCase.execute(rawPayload);
     }
 }

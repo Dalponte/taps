@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { TapMqttController } from './adapters/tap.mqtt.controller';
 import { HandleTapStateUseCase } from './application/use-cases/handle-tap-state.use-case';
 import { HandleTapInputUseCase } from './application/use-cases/handle-tap-input.use-case';
-import { HandleTapDoneUseCase } from './application/use-cases/handle-tap-done.use-case'; // Import the new use case
-import { IMqttPublisher } from './application/ports/out/mqtt-publisher.interface'; // Import output port
-import { MqttPublisherAdapter } from './infrastructure/mqtt/mqtt-publisher.adapter'; // Import output adapter
+import { HandleTapDoneUseCase } from './application/use-cases/handle-tap-done.use-case';
+import { HandleTapFlowUseCase } from './application/use-cases/handle-tap-flow.use-case';
+import { IMqttPublisher } from './application/ports/out/mqtt-publisher.interface';
+import { MqttPublisherAdapter } from './infrastructure/mqtt/mqtt-publisher.adapter';
 
 @Module({
     controllers: [TapMqttController],
@@ -12,6 +13,7 @@ import { MqttPublisherAdapter } from './infrastructure/mqtt/mqtt-publisher.adapt
         HandleTapStateUseCase,
         HandleTapInputUseCase,
         HandleTapDoneUseCase,
+        HandleTapFlowUseCase,
         {
             provide: IMqttPublisher,
             useClass: MqttPublisherAdapter,
