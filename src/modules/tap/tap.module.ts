@@ -6,8 +6,11 @@ import { HandleTapDoneUseCase } from './application/use-cases/handle-tap-done.us
 import { HandleTapFlowUseCase } from './application/use-cases/handle-tap-flow.use-case';
 import { IMqttPublisher } from './application/ports/out/mqtt-publisher.interface';
 import { MqttPublisherAdapter } from './infrastructure/mqtt/mqtt-publisher.adapter';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TapEvent } from './infrastructure/typeorm/tap-event.entity';
 
 @Module({
+    imports: [TypeOrmModule.forFeature([TapEvent])],
     controllers: [TapMqttController],
     providers: [
         HandleTapStateUseCase,
